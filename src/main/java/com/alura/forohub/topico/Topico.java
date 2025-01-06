@@ -3,17 +3,9 @@ import com.alura.forohub.curso.Curso;
 import com.alura.forohub.respuesta.Respuesta;
 import com.alura.forohub.usuario.Usuario;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "topicos")
 
@@ -28,7 +20,7 @@ public class Topico {
 
     private LocalDateTime fechaCreacion;
 
-    private String status;
+    private EstadoTopico status;
 
     @ManyToOne
     @JoinColumn(name = "autor_id")
@@ -46,7 +38,7 @@ public class Topico {
         this.titulo = datosCrearTopico.titulo();
         this.mensaje = datosCrearTopico.mensaje();
         this.fechaCreacion = LocalDateTime.now();
-        this.status = EstadoTopico.NO_RESUELTO.toString();
+        this.status = EstadoTopico.NO_RESUELTO;
         this.autor = datosCrearTopico.autor();
         this.curso = datosCrearTopico.curso();
     }
@@ -63,7 +55,37 @@ public class Topico {
         }
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public EstadoTopico getStatus() {
+        return status;
+    }
+
+    public Usuario getAutor() {
+        return autor;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public List<Respuesta> getRespuestas() {
+        return respuestas;
+    }
 }
 
 

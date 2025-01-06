@@ -1,16 +1,14 @@
 package com.alura.forohub.controller;
 
 
-import com.alura.forohub.curso.Curso;
-import com.alura.forohub.curso.CursoRepository;
-import com.alura.forohub.curso.DatosCurso;
+
 import com.alura.forohub.topico.DatosCrearTopico;
 import com.alura.forohub.topico.DatosRespuestaTopico;
 import com.alura.forohub.topico.Topico;
 import com.alura.forohub.topico.TopicoRepository;
 import com.alura.forohub.usuario.DatosUsuario;
-import com.alura.forohub.usuario.Usuario;
 import com.alura.forohub.usuario.UsuarioRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +22,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/topicos")
-
-
+@SecurityRequirement(name = "bearer-key")
 public class TopicoController {
 
     @Autowired
@@ -34,29 +31,27 @@ public class TopicoController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private CursoRepository cursoRepository;
-
     @PostMapping
     public ResponseEntity<DatosRespuestaTopico> registrarTopico(@RequestBody @Valid DatosCrearTopico datosCrearTopico,
                                                                 UriComponentsBuilder uriComponentsBuilder) {
         Topico topico = topicoRepository.save(new Topico(datosCrearTopico));
         DatosRespuestaTopico datosRespuestaTopico = new DatosRespuestaTopico(
                 topico.getId(),
-                topico.getTitulo(),
                 topico.getMensaje(),
+                topico.getTitulo(),
                 topico.getFechaCreacion(),
-                topico.getStatus(),
                 new DatosUsuario(
                         topico.getAutor().getId(),
                         topico.getAutor().getNombre(),
-                        topico.getAutor().getEmail()),
-                new DatosCurso(
-                        topico.getCurso().getId(),
-                        topico.getCurso().getNombre()));
+                        topico.getAutor().getEmail(),
+                        topico.getAutor().getContrasena(),
+                        topico.getAutor().getPerfiles()),
+                topico.getStatus());
+
         URI url = uriComponentsBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
         return ResponseEntity.created(url).body(datosRespuestaTopico);
     }
+
 
 
 

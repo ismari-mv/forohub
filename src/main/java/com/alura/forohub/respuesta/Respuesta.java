@@ -3,11 +3,8 @@ package com.alura.forohub.respuesta;
 import com.alura.forohub.topico.Topico;
 import com.alura.forohub.usuario.Usuario;
 import jakarta.persistence.*;
-import lombok.Getter;
-
 import java.time.LocalDateTime;
 
-@Getter
 @Entity
 @Table(name = "respuestas")
 
