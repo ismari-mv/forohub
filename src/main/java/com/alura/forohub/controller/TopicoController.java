@@ -45,7 +45,7 @@ public class TopicoController {
                         topico.getAutor().getNombre(),
                         topico.getAutor().getEmail(),
                         topico.getAutor().getContrasena(),
-                        topico.getAutor().getPerfiles()),
+                        topico.getAutor().getPerfiles().toString()),
                 topico.getStatus());
 
         URI url = uriComponentsBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();

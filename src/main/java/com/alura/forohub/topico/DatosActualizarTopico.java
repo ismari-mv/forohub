@@ -1,16 +1,8 @@
 package com.alura.forohub.topico;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 
-public record DatosActualizarTopico(
-        String titulo,
-
-        String mensaje,
-
-        LocalDateTime fechaCreacion
-) {
-
-    public DatosActualizarTopico (Topico topico){
-        this(topico.getTitulo(), topico.getMensaje(), topico.getFechaCreacion());
-    }
+public record DatosActualizarTopico(@NotNull Long id, String titulo,String mensaje, LocalDateTime fechaCreacion) {
 }
