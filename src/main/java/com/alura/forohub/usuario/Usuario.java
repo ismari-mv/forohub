@@ -1,14 +1,18 @@
 package com.alura.forohub.usuario;
 
+import com.alura.forohub.controller.UsuarioController;
 import com.alura.forohub.perfil.Perfil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 import java.util.List;
@@ -36,24 +40,11 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Perfil> perfiles;
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public List<Perfil> getPerfiles() {
-        return perfiles;
+    public Usuario (DatosUsuario crearUsuario){
+        this.nombre = crearUsuario.nombre();
+        this.email= crearUsuario.email();
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.contrasena= encoder.encode(crearUsuario.contrasena());
     }
 
     @Override

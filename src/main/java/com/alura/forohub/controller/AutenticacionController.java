@@ -1,7 +1,7 @@
 package com.alura.forohub.controller;
 
-import com.alura.forohub.security.DatosJWTToken;
-import com.alura.forohub.security.TokenService;
+import com.alura.forohub.infra.DatosJWTToken;
+import com.alura.forohub.infra.TokenService;
 import com.alura.forohub.usuario.DatosAutenticacionUsuario;
 import com.alura.forohub.usuario.Usuario;
 import jakarta.validation.Valid;

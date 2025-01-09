@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "topicos")
+@Table(name = "topico")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -61,6 +61,10 @@ public class Topico {
         if (datosActualizarTopico.fechaCreacion() != null) {
             this.fechaCreacion = datosActualizarTopico.fechaCreacion();
         }
+    }
+
+    public void eliminarTopico (){
+        this.status=EstadoTopico.NO_RESUELTO;
     }
 
 }

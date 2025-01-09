@@ -1,4 +1,4 @@
-package com.alura.forohub.security;
+package com.alura.forohub.infra;
 
 public record DatosJWTToken(String jwTtoken) {
 }

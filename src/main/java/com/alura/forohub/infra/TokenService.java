@@ -1,4 +1,4 @@
-package com.alura.forohub.security;
+package com.alura.forohub.infra;
 
 import com.alura.forohub.usuario.Usuario;
 import com.auth0.jwt.JWT;
@@ -35,29 +35,29 @@ public class TokenService {
         }
     }
 
-    public String getSubject (String token) {
-        if (token == null) {
-            throw new RuntimeException();
+    public String getSubject(String token) {
+        if (token == null || token.isBlank()) {
+            throw new IllegalArgumentException("El token es nulo o está vacío.");
         }
-        DecodedJWT verifier = null;
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret); // validando firma
-            verifier = JWT.require(algorithm)
+            DecodedJWT verifier = JWT.require(algorithm)
                     .withIssuer("foro hub")
                     .build()
                     .verify(token);
-            verifier.getSubject();
+            String subject = verifier.getSubject();
+            if (subject == null || subject.isBlank()) {
+                throw new IllegalStateException("El token no contiene un sujeto válido.");
+            }
+            return subject;
         } catch (JWTVerificationException exception) {
-            System.out.println(exception.toString());
+            throw new IllegalArgumentException("El token no es válido.", exception);
         }
-        if (verifier.getSubject() == null) {
-            throw new RuntimeException("Verifier invalido");
-        }
-        return verifier.getSubject();
     }
 
+
     private Instant generarFechaExpiracion() {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));
+        return LocalDateTime.now().plusHours(200).toInstant(ZoneOffset.of("-05:00"));
     }
 
 }
