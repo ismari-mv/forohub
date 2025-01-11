@@ -2,6 +2,7 @@ package com.alura.forohub.topico;
 import com.alura.forohub.curso.Curso;
 import com.alura.forohub.respuesta.Respuesta;
 import com.alura.forohub.usuario.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -28,6 +29,7 @@ public class Topico {
 
     private LocalDateTime fechaCreacion;
 
+    @Enumerated(EnumType.STRING)
     private EstadoTopico status;
 
     @ManyToOne
@@ -63,9 +65,18 @@ public class Topico {
         }
     }
 
-    public void eliminarTopico (){
-        this.status=EstadoTopico.NO_RESUELTO;
+    @Override
+    public String toString() {
+        return "Topico{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", mensaje='" + mensaje + '\'' +
+                ", fechaCreacion=" + fechaCreacion +
+                ", status=" + status +
+                ", autor=" + autor +
+                ", curso=" + curso +
+                ", respuestas=" + respuestas +
+                '}';
     }
-
 }
 

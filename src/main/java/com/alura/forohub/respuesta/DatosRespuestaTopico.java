@@ -1,15 +1,14 @@
-package com.alura.forohub.topico;
+package com.alura.forohub.respuesta;
 
+import com.alura.forohub.topico.Topico;
 import com.alura.forohub.usuario.DatosUsuario;
 
 import java.time.LocalDateTime;
 
 public record DatosRespuestaTopico(
-        Long id,
         String mensaje,
-        String topico,
+        Topico topico,
         LocalDateTime fechaCreacion,
-        DatosUsuario autor,
-        EstadoTopico solucion
+        DatosUsuario autor
 ) {
 }

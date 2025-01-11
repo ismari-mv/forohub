@@ -40,7 +40,7 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Perfil> perfiles;
 
-    public Usuario (DatosUsuario crearUsuario){
+    public Usuario (DatosDetalleUsuario crearUsuario){
         this.nombre = crearUsuario.nombre();
         this.email= crearUsuario.email();
         PasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -80,6 +80,17 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return UserDetails.super.isEnabled();
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", email='" + email + '\'' +
+                ", contrasena='" + contrasena + '\'' +
+                ", perfiles=" + perfiles +
+                '}';
     }
 }
 

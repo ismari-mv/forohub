@@ -2,6 +2,7 @@ package com.alura.forohub.controller;
 
 
 import com.alura.forohub.dto.GenericResponseDto;
+import com.alura.forohub.usuario.DatosDetalleUsuario;
 import com.alura.forohub.usuario.DatosUsuario;
 import com.alura.forohub.usuario.Usuario;
 import com.alura.forohub.usuario.UsuarioRepository;
@@ -24,7 +25,7 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping
-    public ResponseEntity<GenericResponseDto> insertUsuario (@RequestBody @Valid DatosUsuario crearUsuario,
+    public ResponseEntity<GenericResponseDto> insertUsuario (@RequestBody @Valid DatosDetalleUsuario crearUsuario,
                                                              UriComponentsBuilder uriComponentsBuilder){
 
         Usuario usuarioGuardado = usuarioRepository.save(new Usuario(crearUsuario));
@@ -34,9 +35,9 @@ public class UsuarioController {
     }
 
     @GetMapping ("/{id}")
-    public ResponseEntity<DatosUsuario> retornaDatosUsuario (@PathVariable Long id){
+    public ResponseEntity<DatosDetalleUsuario> retornaDatosUsuario (@PathVariable Long id){
         Usuario usuarioConsulta = usuarioRepository.getReferenceById(id);
-        return ResponseEntity.ok(new DatosUsuario(usuarioConsulta.getNombre(),usuarioConsulta.getEmail(),
+        return ResponseEntity.ok(new DatosDetalleUsuario(usuarioConsulta.getNombre(),usuarioConsulta.getEmail(),
                 usuarioConsulta.getContrasena(),usuarioConsulta.getPerfiles()));
     }
 
