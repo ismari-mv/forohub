@@ -52,4 +52,16 @@ public class Respuesta {
         this.autor.setId(datosRespuestaTopico.idAutor());
     }
 
+    public void actualizarRespuesta (DatosActualizarRespuesta datosActualizarRespuesta){
+        if (datosActualizarRespuesta.mensaje() != null){
+            this.mensaje= datosActualizarRespuesta.mensaje();
+        }
+        if (datosActualizarRespuesta.fechaCreacion() != null){
+            this.fechaCreacion = datosActualizarRespuesta.fechaCreacion();
+        }
+        if (datosActualizarRespuesta.solucion()!= null){
+            this.solucion= datosActualizarRespuesta.solucion();
+        }
+    }
+
 }

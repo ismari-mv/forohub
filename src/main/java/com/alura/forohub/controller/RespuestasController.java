@@ -2,19 +2,26 @@ package com.alura.forohub.controller;
 
 
 import com.alura.forohub.dto.GenericResponseDto;
+import com.alura.forohub.respuesta.DatosActualizarRespuesta;
 import com.alura.forohub.respuesta.DatosRespuestaTopico;
 import com.alura.forohub.respuesta.Respuesta;
 import com.alura.forohub.respuesta.RespuestaRepository;
+import com.alura.forohub.topico.DatosActualizarTopico;
 import com.alura.forohub.topico.TopicoRepository;
 import com.alura.forohub.usuario.UsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping ("/respuesta")
@@ -37,6 +44,32 @@ public class RespuestasController {
         List<DatosRespuestaTopico> response = respuestas.stream()
                 .map(DatosRespuestaTopico::new).toList();
         return ResponseEntity.ok(response);
+    }
+
+
+    @PutMapping ("/{id}")
+    @Transactional
+    public ResponseEntity<DatosActualizarRespuesta> datosRespuesta (@PathVariable Long id, @RequestBody @Valid DatosActualizarRespuesta datosActualizarRespuesta) {
+        Optional<Respuesta> actualizarRespuesta = respuestaRepository.findById(id);
+        if (actualizarRespuesta.isPresent()) {
+            Respuesta respuestaTopico = actualizarRespuesta.get();
+            respuestaTopico.actualizarRespuesta(datosActualizarRespuesta);
+            respuestaRepository.save(respuestaTopico);
+        } else {
+            throw  new EntityNotFoundException();
+        }
+        return  ResponseEntity.ok(datosActualizarRespuesta);
+    }
+
+    @DeleteMapping ("/{id}")
+    @Transactional
+    public ResponseEntity eliminarRespuesta (@PathVariable @NotNull Long id){
+        Optional<Respuesta> deleteRespuesta = respuestaRepository.findById(id);
+        if (deleteRespuesta.isPresent()){
+            respuestaRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException();
+        } return ResponseEntity.noContent().build();
     }
 
 }

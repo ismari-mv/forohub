@@ -1,9 +1,4 @@
 package com.alura.forohub.respuesta;
-
-import com.alura.forohub.topico.Topico;
-import com.alura.forohub.usuario.DatosUsuario;
-import com.alura.forohub.usuario.Usuario;
-
 import java.time.LocalDateTime;
 
 public record DatosRespuestaTopico(
