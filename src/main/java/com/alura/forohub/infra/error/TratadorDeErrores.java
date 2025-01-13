@@ -27,8 +27,9 @@ public class TratadorDeErrores {
     }
 
     @ExceptionHandler(ValidacionException.class)
-    public ResponseEntity tratarErrorDeValidacion(ValidacionException e){
-        return ResponseEntity.badRequest().body(e.getMessage());
+    public ResponseEntity<GenericResponseDto> tratarErrorDeValidacion(ValidacionException e){
+        return ResponseEntity.badRequest().body
+                (new GenericResponseDto("Error al guardar los datos", e.getMessage()));
     }
 
     private record DatosErrorValidacion(String campo, String error){
